@@ -1,0 +1,5 @@
+C:\Users\symam\Documents\Builded Winform Apps\Todos\TodoApp.exe
+C:\Users\symam\Documents\Builded Winform Apps\Todos\TodoApp.dll
+C:\Users\symam\Documents\Builded Winform Apps\Todos\TodoApp.deps.json
+C:\Users\symam\Documents\Builded Winform Apps\Todos\TodoApp.runtimeconfig.json
+C:\Users\symam\Documents\Builded Winform Apps\Todos\TodoApp.pdb
