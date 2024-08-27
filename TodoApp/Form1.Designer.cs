@@ -92,13 +92,13 @@
             buttonDelete.FlatAppearance.BorderSize = 0;
             buttonDelete.FlatStyle = FlatStyle.Flat;
             buttonDelete.Font = new Font("Verdana", 12F, FontStyle.Bold);
-            buttonDelete.ForeColor = Color.White;
+            buttonDelete.ForeColor = Color.Black;
             buttonDelete.Location = new Point(324, 398);
             buttonDelete.Name = "buttonDelete";
             buttonDelete.Size = new Size(150, 40);
             buttonDelete.TabIndex = 3;
             buttonDelete.Text = "Delete";
-            buttonDelete.TextColor = Color.White;
+            buttonDelete.TextColor = Color.Black;
             buttonDelete.UseVisualStyleBackColor = false;
             buttonDelete.Click += buttonDelete_Click;
             // 

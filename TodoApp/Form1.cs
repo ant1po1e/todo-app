@@ -15,9 +15,37 @@ namespace TodoApp
             LoadTodos();
 
             updateTimer = new System.Windows.Forms.Timer();
-            updateTimer.Interval = 60000; // Check every minute
+            updateTimer.Interval = 60000;
             updateTimer.Tick += UpdateTimer_Tick;
             updateTimer.Start();
+        }
+
+        private void InitializeDataGridView()
+        {
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+            dataGridViewTodos.ColumnCount = 3;
+            dataGridViewTodos.Columns[0].Name = "Name";
+            dataGridViewTodos.Columns[1].Name = "Created Date";
+            dataGridViewTodos.Columns[2].Name = "Due Date";
+            dataGridViewTodos.Columns.Add(buttonColumn);
+            dataGridViewTodos.Columns["Created Date"].Width = 150;
+            dataGridViewTodos.Columns["Due Date"].Width = 150;
+
+            dataGridViewTodos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewTodos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewTodos.MultiSelect = false;
+
+            buttonColumn.HeaderText = "Action";
+            buttonColumn.Name = "ActionButton";
+            buttonColumn.UseColumnTextForButtonValue = false;
+            buttonColumn.FlatStyle = FlatStyle.Flat;
+            buttonColumn.DefaultCellStyle.Padding = new Padding(2);
+
+
+            dataGridViewTodos.CellFormatting += dataGridViewTodos_CellFormatting;
+            dataGridViewTodos.CellMouseEnter += dataGridViewTodos_CellMouseEnter;
+            dataGridViewTodos.CellMouseLeave += dataGridViewTodos_CellMouseLeave;
+            dataGridViewTodos.CellEndEdit += dataGridViewTodos_CellEndEdit;
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
@@ -25,34 +53,7 @@ namespace TodoApp
             UpdateRowColors();
         }
 
-        private void InitializeDataGridView()
-        {
-            dataGridViewTodos.ColumnCount = 3; // Change this to 3
-            dataGridViewTodos.Columns[0].Name = "Name";
-            dataGridViewTodos.Columns[1].Name = "Created Date";
-            dataGridViewTodos.Columns[2].Name = "Due Date";
-            // Remove any line that adds an "Action" column here
-
-            dataGridViewTodos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewTodos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewTodos.MultiSelect = false;
-
-            // Add the button column
-            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
-            buttonColumn.HeaderText = "Action";
-            buttonColumn.Name = "ActionButton";
-            buttonColumn.UseColumnTextForButtonValue = false;
-            buttonColumn.FlatStyle = FlatStyle.Flat;
-            buttonColumn.DefaultCellStyle.Padding = new Padding(2);
-            dataGridViewTodos.Columns.Add(buttonColumn);
-
-            // Add event handler for CellFormatting
-            dataGridViewTodos.CellFormatting += DataGridViewTodos_CellFormatting;
-            dataGridViewTodos.CellMouseEnter += dataGridViewTodos_CellMouseEnter;
-            dataGridViewTodos.CellMouseLeave += dataGridViewTodos_CellMouseLeave;
-            dataGridViewTodos.CellEndEdit += dataGridViewTodos_CellEndEdit;
-        }
-
+        #region TodoFunctions
         private void AddTodo()
         {
             string name = textBoxName.Text.Trim();
@@ -72,7 +73,7 @@ namespace TodoApp
                 IsDone = false
             };
 
-            dataGridViewTodos.Rows.Add(newTodo.Name, newTodo.CreatedDate.ToShortDateString(), newTodo.DueDate.ToShortDateString(), "");
+            dataGridViewTodos.Rows.Add(newTodo.Name, FormatDate(newTodo.CreatedDate), FormatDate(newTodo.DueDate), "");
             dataGridViewTodos.Rows[dataGridViewTodos.Rows.Count - 2].Tag = newTodo;
 
             UpdateRowColors();
@@ -87,89 +88,16 @@ namespace TodoApp
                 TodoItem todo = row.Tag as TodoItem;
                 if (todo != null)
                 {
-                    // Update the todo properties
                     todo.Name = textBoxName.Text.Trim();
                     todo.DueDate = dateTimePickerDueDate.Value;
 
-                    // Update the row cells
                     row.Cells["Name"].Value = todo.Name;
-                    row.Cells["Due Date"].Value = todo.DueDate.ToShortDateString();
+                    row.Cells["Due Date"].Value = FormatDate(todo.DueDate);
 
-                    // Update the row color
                     UpdateRowColor(row);
-
-                    // Refresh the DataGridView
                     dataGridViewTodos.InvalidateRow(rowIndex);
                 }
             }
-        }
-
-
-
-        private void buttonAdd_Click(object sender, EventArgs e)
-        {
-            AddTodo();
-        }
-
-        private void buttonEdit_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewTodos.SelectedRows.Count > 0)
-            {
-                int selectedIndex = dataGridViewTodos.SelectedRows[0].Index;
-                EditTodo(selectedIndex);
-            }
-        }
-
-        private void buttonDelete_Click(object sender, EventArgs e)
-        {
-            if (dataGridViewTodos.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Please select a todo to delete.");
-                return;
-            } else
-            {
-                dataGridViewTodos.Rows.RemoveAt(dataGridViewTodos.SelectedRows[0].Index);
-            }
-        }
-
-        private void dataGridViewTodos_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && !dataGridViewTodos.Rows[e.RowIndex].IsNewRow)
-            {
-                DataGridViewRow row = dataGridViewTodos.Rows[e.RowIndex];
-                textBoxName.Text = row.Cells["Name"].Value?.ToString() ?? "";
-
-                if (DateTime.TryParse(row.Cells["Due Date"].Value?.ToString(), out DateTime dueDate))
-                {
-                    dateTimePickerDueDate.Value = dueDate;
-                }
-                else
-                {
-                    dateTimePickerDueDate.Value = DateTime.Now;
-                }
-            }
-            else
-            {
-                // Clear the input fields when clicking on the new row or column headers
-                textBoxName.Clear();
-                dateTimePickerDueDate.Value = DateTime.Now;
-            }
-        }
-
-        // Add this new method
-        private void textBoxName_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == (char)Keys.Enter)
-            {
-                e.Handled = true; // Prevents the ding sound
-                AddTodo();
-            }
-        }
-
-        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            SaveTodos();
-            updateTimer.Stop();
         }
 
         private void SaveTodos()
@@ -212,7 +140,7 @@ namespace TodoApp
                                 IsDone = bool.Parse(values[3])
                             };
 
-                            int rowIndex = dataGridViewTodos.Rows.Add(todo.Name, todo.CreatedDate.ToShortDateString(), todo.DueDate.ToShortDateString(), "");
+                            int rowIndex = dataGridViewTodos.Rows.Add(todo.Name, FormatDate(todo.CreatedDate), FormatDate(todo.DueDate), "");
                             dataGridViewTodos.Rows[rowIndex].Tag = todo;
                         }
                     }
@@ -220,48 +148,57 @@ namespace TodoApp
                 UpdateRowColors();
             }
         }
-        private void UpdateRowColors()
+        #endregion
+
+        #region ButtonEvents
+        private void buttonAdd_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow row in dataGridViewTodos.Rows)
-            {
-                UpdateRowColor(row);
-            }
-            dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index);
-            dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index);  // Force button column to redraw
+            AddTodo();
         }
 
-        private void UpdateRowColor(DataGridViewRow row)
+        private void buttonEdit_Click(object sender, EventArgs e)
         {
-            if (row != null && !row.IsNewRow)
+            if (dataGridViewTodos.SelectedRows.Count > 0)
             {
-                TodoItem todo = row.Tag as TodoItem;
-                if (todo != null)
-                {
-                    if (todo.IsDone)
-                    {
-                        row.DefaultCellStyle.BackColor = Color.LightGreen;
-                    }
-                    else
-                    {
-                        TimeSpan timeUntilDue = todo.DueDate.Date - DateTime.Now.Date;
+                int selectedIndex = dataGridViewTodos.SelectedRows[0].Index;
+                EditTodo(selectedIndex);
+            }
+        }
 
-                        if (timeUntilDue.TotalDays < 0) // Past due
-                        {
-                            row.DefaultCellStyle.BackColor = Color.Red;
-                            row.DefaultCellStyle.ForeColor = Color.White;
-                        }
-                        else if (timeUntilDue.TotalDays <= 1) // Due today or tomorrow
-                        {
-                            row.DefaultCellStyle.BackColor = Color.Yellow;
-                            row.DefaultCellStyle.ForeColor = Color.Black;
-                        }
-                        else // Not due soon
-                        {
-                            row.DefaultCellStyle.BackColor = Color.White;
-                            row.DefaultCellStyle.ForeColor = Color.Black;
-                        }
-                    }
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if (dataGridViewTodos.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a todo to delete.");
+                return;
+            } else
+            {
+                dataGridViewTodos.Rows.RemoveAt(dataGridViewTodos.SelectedRows[0].Index);
+            }
+        }
+        #endregion
+
+        #region DatagridEvents
+        private void dataGridViewTodos_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && !dataGridViewTodos.Rows[e.RowIndex].IsNewRow)
+            {
+                DataGridViewRow row = dataGridViewTodos.Rows[e.RowIndex];
+                textBoxName.Text = row.Cells["Name"].Value?.ToString() ?? "";
+
+                if (DateTime.TryParse(row.Cells["Due Date"].Value?.ToString(), out DateTime dueDate))
+                {
+                    dateTimePickerDueDate.Value = dueDate;
                 }
+                else
+                {
+                    dateTimePickerDueDate.Value = DateTime.Now;
+                }
+            }
+            else
+            {
+                textBoxName.Clear();
+                dateTimePickerDueDate.Value = DateTime.Now;
             }
         }
 
@@ -281,15 +218,15 @@ namespace TodoApp
                     else
                     {
                         dataGridViewTodos.Rows.RemoveAt(e.RowIndex);
-                        return;  // Exit the method as the row no longer exists
+                        return;
                     }
-                    dataGridViewTodos.InvalidateCell(e.ColumnIndex, e.RowIndex);  // Force cell to redraw
-                    UpdateRowColors();  // Update colors for all rows
+                    dataGridViewTodos.InvalidateCell(e.ColumnIndex, e.RowIndex);
+                    UpdateRowColors();
                 }
             }
         }
 
-        private void DataGridViewTodos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        private void dataGridViewTodos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (e.ColumnIndex == dataGridViewTodos.Columns["ActionButton"].Index && e.RowIndex >= 0)
             {
@@ -322,6 +259,7 @@ namespace TodoApp
                 if (todo != null && DateTime.TryParse(row.Cells["Due Date"].Value?.ToString(), out DateTime newDueDate))
                 {
                     todo.DueDate = newDueDate;
+                    row.Cells["Due Date"].Value = FormatDate(newDueDate);
                     UpdateRowColor(row);
                 }
             }
@@ -346,9 +284,104 @@ namespace TodoApp
             if (e.ColumnIndex == dataGridViewTodos.Columns["ActionButton"].Index && e.RowIndex >= 0)
             {
                 dataGridViewTodos.Cursor = Cursors.Default;
-                dataGridViewTodos.InvalidateCell(e.ColumnIndex, e.RowIndex);  // Reset to original color
+                dataGridViewTodos.InvalidateCell(e.ColumnIndex, e.RowIndex);
             }
         }
+
+        #endregion
+
+        #region UpdateFunctions
+        private void UpdateRowColors()
+        {
+            foreach (DataGridViewRow row in dataGridViewTodos.Rows)
+            {
+                UpdateRowColor(row);
+            }
+            dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index);
+            dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index); 
+        }
+
+        private void UpdateRowColor(DataGridViewRow row)
+        {
+            if (row != null && !row.IsNewRow)
+            {
+                TodoItem todo = row.Tag as TodoItem;
+                if (todo != null)
+                {
+                    if (todo.IsDone)
+                    {
+                        row.DefaultCellStyle.BackColor = Color.LightGreen;
+                    }
+                    else
+                    {
+                        TimeSpan timeUntilDue = todo.DueDate.Date - DateTime.Now.Date;
+
+                        if (timeUntilDue.TotalDays < 0) 
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Red;
+                            row.DefaultCellStyle.ForeColor = Color.White;
+                        }
+                        else if (timeUntilDue.TotalDays <= 1) 
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Yellow;
+                            row.DefaultCellStyle.ForeColor = Color.Black;
+                        }
+                        else // Not due soon
+                        {
+                            row.DefaultCellStyle.BackColor = Color.White;
+                            row.DefaultCellStyle.ForeColor = Color.Black;
+                        }
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region OtherEvents
+        private void textBoxName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                e.Handled = true;
+                AddTodo();
+            }
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveTodos();
+            updateTimer.Stop();
+        }
+        #endregion
+
+        #region FormatDate
+        private string FormatDate(DateTime date)
+        {
+            return date.ToString("MMMM dd") + GetOrdinalSuffix(date.Day) + date.ToString(" yyyy");
+        }
+
+        private string GetOrdinalSuffix(int day)
+        {
+            switch (day % 100)
+            {
+                case 11:
+                case 12:
+                case 13:
+                    return "th";
+            }
+
+            switch (day % 10)
+            {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+                default:
+                    return "th";
+            }
+        }
+        #endregion
     }
 
     public class TodoItem

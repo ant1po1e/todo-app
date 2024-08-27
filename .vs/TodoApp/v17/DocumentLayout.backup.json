@@ -3,9 +3,6 @@
   "WorkspaceRootPath": "C:\\Users\\symam\\source\\repos\\TodoApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\8.0.400\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Publish.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{40B37C3B-B592-48D3-A9AA-E31071C5E544}|TodoApp\\TodoApp.csproj|C:\\Users\\symam\\source\\repos\\TodoApp\\todoapp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{40B37C3B-B592-48D3-A9AA-E31071C5E544}|TodoApp\\TodoApp.csproj|solutionrelative:todoapp\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -25,24 +22,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Microsoft.NET.Publish.targets",
-              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Publish.targets",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.400\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Publish.targets",
-              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Publish.targets",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.400\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.Publish.targets",
-              "ViewState": "AgIAAE4BAAAAAAAAAAAEwF4BAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2024-08-26T23:48:51.442Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Resources.resx",
               "DocumentMoniker": "C:\\Users\\symam\\source\\repos\\TodoApp\\TodoApp\\Properties\\Resources.resx",
               "RelativeDocumentMoniker": "TodoApp\\Properties\\Resources.resx",
@@ -54,7 +38,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "C:\\Users\\symam\\source\\repos\\TodoApp\\TodoApp\\Form1.cs",
               "RelativeDocumentMoniker": "TodoApp\\Form1.cs",
@@ -63,16 +47,37 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T03:32:35.755Z",
               "EditorCaption": " [Design]"
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "7878f8cf-9257-4978-926a-3a7f52c80faf",
+        "Display": 0,
+        "X": -430,
+        "Y": 417,
+        "Width": 800,
+        "Height": 600,
+        "WindowState": 2
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\symam\\source\\repos\\TodoApp\\TodoApp\\Form1.cs",
               "RelativeDocumentMoniker": "TodoApp\\Form1.cs",
               "ToolTip": "C:\\Users\\symam\\source\\repos\\TodoApp\\TodoApp\\Form1.cs",
               "RelativeToolTip": "TodoApp\\Form1.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAkwB8AAAA/AAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAA9wIYBAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T03:32:53.933Z",
               "EditorCaption": ""
