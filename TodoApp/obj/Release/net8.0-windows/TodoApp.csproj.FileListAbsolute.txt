@@ -17,3 +17,4 @@ C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Release\net8.0-windows\refint\To
 C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Release\net8.0-windows\TodoApp.pdb
 C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Release\net8.0-windows\TodoApp.genruntimeconfig.cache
 C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Release\net8.0-windows\ref\TodoApp.dll
+C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Release\net8.0-windows\TodoApp.sourcelink.json

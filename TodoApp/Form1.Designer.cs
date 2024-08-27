@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             buttonAdd = new InventorySystem.Controls.CustomButton();
             buttonEdit = new InventorySystem.Controls.CustomButton();
@@ -159,6 +160,7 @@
             Controls.Add(buttonEdit);
             Controls.Add(buttonAdd);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;

@@ -17,3 +17,4 @@ C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Debug\net8.0-windows\ref\TodoApp
 C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Debug\net8.0-windows\WinFormsApp1.Controls.CustomComboBox.resources
 C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Debug\net8.0-windows\InventorySystem.Controls.CustomTextBox.resources
 C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Debug\net8.0-windows\TodoApp.Properties.Resources.resources
+C:\Users\symam\source\repos\TodoApp\TodoApp\obj\Debug\net8.0-windows\TodoApp.sourcelink.json
