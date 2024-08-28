@@ -28,8 +28,8 @@ namespace TodoApp
             dataGridViewTodos.Columns[1].Name = "Created Date";
             dataGridViewTodos.Columns[2].Name = "Due Date";
             dataGridViewTodos.Columns.Add(buttonColumn);
-            dataGridViewTodos.Columns["Created Date"].Width = 150;
-            dataGridViewTodos.Columns["Due Date"].Width = 150;
+            dataGridViewTodos.Columns["Created Date"].Width = 200;
+            dataGridViewTodos.Columns["Due Date"].Width = 200;
 
             dataGridViewTodos.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridViewTodos.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -356,7 +356,12 @@ namespace TodoApp
         #region FormatDate
         private string FormatDate(DateTime date)
         {
-            return date.ToString("MMMM dd") + GetOrdinalSuffix(date.Day) + date.ToString(" yyyy");
+            string dayName = date.ToString("dddd");
+            string monthName = date.ToString("MMMM");
+            string dayNumber = date.Day.ToString(); // This removes leading zero
+            string year = date.ToString("yyyy");
+
+            return $"{dayName}, {monthName} {dayNumber}{GetOrdinalSuffix(date.Day)} {year}";
         }
 
         private string GetOrdinalSuffix(int day)
