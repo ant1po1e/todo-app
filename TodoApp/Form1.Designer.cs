@@ -39,6 +39,7 @@
             dataGridViewTodos = new DataGridView();
             updateTimer = new System.Windows.Forms.Timer(components);
             label1 = new Label();
+            buttonDeleteResolved = new InventorySystem.Controls.CustomButton();
             ((System.ComponentModel.ISupportInitialize)dataGridViewTodos).BeginInit();
             SuspendLayout();
             // 
@@ -146,12 +147,32 @@
             label1.TabIndex = 7;
             label1.Text = "Todo Name";
             // 
+            // buttonDeleteResolved
+            // 
+            buttonDeleteResolved.BackColor = Color.Tomato;
+            buttonDeleteResolved.BackgroundColor = Color.Tomato;
+            buttonDeleteResolved.BorderColor = Color.PaleVioletRed;
+            buttonDeleteResolved.BorderRadius = 15;
+            buttonDeleteResolved.BorderSize = 0;
+            buttonDeleteResolved.FlatAppearance.BorderSize = 0;
+            buttonDeleteResolved.FlatStyle = FlatStyle.Flat;
+            buttonDeleteResolved.Font = new Font("Verdana", 12F, FontStyle.Bold);
+            buttonDeleteResolved.ForeColor = Color.Black;
+            buttonDeleteResolved.Location = new Point(609, 342);
+            buttonDeleteResolved.Name = "buttonDeleteResolved";
+            buttonDeleteResolved.Size = new Size(179, 40);
+            buttonDeleteResolved.TabIndex = 8;
+            buttonDeleteResolved.Text = "Delete Resolved";
+            buttonDeleteResolved.TextColor = Color.Black;
+            buttonDeleteResolved.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Snow;
             ClientSize = new Size(800, 450);
+            Controls.Add(buttonDeleteResolved);
             Controls.Add(label1);
             Controls.Add(dataGridViewTodos);
             Controls.Add(textBoxName);
@@ -184,5 +205,6 @@
         private DataGridView dataGridViewTodos;
         private System.Windows.Forms.Timer updateTimer;
         private Label label1;
+        private InventorySystem.Controls.CustomButton buttonDeleteResolved;
     }
 }

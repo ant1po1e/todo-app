@@ -56,7 +56,7 @@
       "VerticalTabListWidth": 256,
       "FloatingWindowState": {
         "Id": "7878f8cf-9257-4978-926a-3a7f52c80faf",
-        "Display": 0,
+        "Display": 1,
         "X": -430,
         "Y": 417,
         "Width": 800,
@@ -76,7 +76,7 @@
               "RelativeDocumentMoniker": "TodoApp\\Form1.cs",
               "ToolTip": "C:\\Users\\symam\\source\\repos\\TodoApp\\TodoApp\\Form1.cs",
               "RelativeToolTip": "TodoApp\\Form1.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwB8AAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T03:32:53.933Z",
               "EditorCaption": ""

@@ -46,6 +46,7 @@ namespace TodoApp
             dataGridViewTodos.CellMouseEnter += dataGridViewTodos_CellMouseEnter;
             dataGridViewTodos.CellMouseLeave += dataGridViewTodos_CellMouseLeave;
             dataGridViewTodos.CellEndEdit += dataGridViewTodos_CellEndEdit;
+            buttonDeleteResolved.Click += buttonDeleteResolved_Click;
         }
 
         private void UpdateTimer_Tick(object sender, EventArgs e)
@@ -78,6 +79,8 @@ namespace TodoApp
 
             UpdateRowColors();
             textBoxName.Clear();
+
+            UpdateDeleteResolvedButtonState();
         }
 
         private void EditTodo(int rowIndex)
@@ -148,6 +151,35 @@ namespace TodoApp
                 UpdateRowColors();
             }
         }
+
+        private void DeleteResolvedTodos()
+        {
+            // Create a list to store the indices of rows to be removed
+            List<int> rowsToRemove = new List<int>();
+
+            // Iterate through the rows in reverse order
+            for (int i = dataGridViewTodos.Rows.Count - 1; i >= 0; i--)
+            {
+                DataGridViewRow row = dataGridViewTodos.Rows[i];
+                TodoItem todo = row.Tag as TodoItem;
+                if (todo != null && todo.IsDone)
+                {
+                    rowsToRemove.Add(i);
+                }
+            }
+
+            // Remove the rows
+            foreach (int index in rowsToRemove)
+            {
+                dataGridViewTodos.Rows.RemoveAt(index);
+            }
+
+            // Update the row colors and refresh the DataGridView
+            UpdateRowColors();
+            dataGridViewTodos.Refresh();
+
+            MessageBox.Show($"Deleted {rowsToRemove.Count} resolved todo(s).", "Todos Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
         #endregion
 
         #region ButtonEvents
@@ -171,14 +203,26 @@ namespace TodoApp
             {
                 MessageBox.Show("Please select a todo to delete.");
                 return;
-            } else
+            }
+            else
             {
                 dataGridViewTodos.Rows.RemoveAt(dataGridViewTodos.SelectedRows[0].Index);
+            }
+
+            UpdateDeleteResolvedButtonState();
+        }
+
+        private void buttonDeleteResolved_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to delete all resolved todos?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result == DialogResult.Yes)
+            {
+                DeleteResolvedTodos();
             }
         }
         #endregion
 
-        #region DatagridEvents
+        #region DataGridEvents
         private void dataGridViewTodos_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && !dataGridViewTodos.Rows[e.RowIndex].IsNewRow)
@@ -224,6 +268,8 @@ namespace TodoApp
                     UpdateRowColors();
                 }
             }
+
+            UpdateDeleteResolvedButtonState();
         }
 
         private void dataGridViewTodos_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -298,7 +344,7 @@ namespace TodoApp
                 UpdateRowColor(row);
             }
             dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index);
-            dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index); 
+            dataGridViewTodos.InvalidateColumn(dataGridViewTodos.Columns["ActionButton"].Index);
         }
 
         private void UpdateRowColor(DataGridViewRow row)
@@ -316,12 +362,12 @@ namespace TodoApp
                     {
                         TimeSpan timeUntilDue = todo.DueDate.Date - DateTime.Now.Date;
 
-                        if (timeUntilDue.TotalDays < 0) 
+                        if (timeUntilDue.TotalDays < 0)
                         {
                             row.DefaultCellStyle.BackColor = Color.Red;
                             row.DefaultCellStyle.ForeColor = Color.White;
                         }
-                        else if (timeUntilDue.TotalDays <= 1) 
+                        else if (timeUntilDue.TotalDays <= 1)
                         {
                             row.DefaultCellStyle.BackColor = Color.Yellow;
                             row.DefaultCellStyle.ForeColor = Color.Black;
@@ -334,6 +380,14 @@ namespace TodoApp
                     }
                 }
             }
+        }
+        private void UpdateDeleteResolvedButtonState()
+        {
+            bool hasResolvedTodos = dataGridViewTodos.Rows
+                .Cast<DataGridViewRow>()
+                .Any(row => (row.Tag as TodoItem)?.IsDone == true);
+
+            buttonDeleteResolved.Enabled = hasResolvedTodos;
         }
         #endregion
 
@@ -388,6 +442,7 @@ namespace TodoApp
         }
         #endregion
     }
+
 
     public class TodoItem
     {
